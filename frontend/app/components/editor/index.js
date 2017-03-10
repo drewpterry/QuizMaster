@@ -23,10 +23,20 @@ export default class MyStatefulEditor extends Component {
   };
 
   render () {
+    const toolbarConfig = {
+      // Specify the groups to display
+      display: ['INLINE_STYLE_BUTTONS', 'LINK_BUTTONS'],
+      INLINE_STYLE_BUTTONS: [
+        {label: 'Bold', style: 'BOLD'},
+        {label: 'Italic', style: 'ITALIC'},
+        {label: 'Underline', style: 'UNDERLINE'}
+      ]
+    };
     return (
       <RichTextEditor
         value={this.state.value}
         onChange={this.onChange}
+        toolbarConfig={toolbarConfig}
       />
     );
   }
