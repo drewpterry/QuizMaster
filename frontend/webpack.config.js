@@ -1,12 +1,11 @@
 const {resolve} = require('path');
 const webpack = require('webpack');
-const validate = require('webpack-validator');
 const {getIfUtils, removeEmpty} = require('webpack-config-utils');
 
 module.exports = env => {
   const {ifProd, ifNotProd} = getIfUtils(env)
 
-  return validate({
+  return {
     entry: './index.js',
     context: __dirname,
     output: {
@@ -26,6 +25,9 @@ module.exports = env => {
         {test: /\.css$/, loader: 'style-loader!css-loader'},
         {test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader'},
       ],
+    },
+    resolve: {
+        modules: ['app', 'node_modules']
     },
     plugins: removeEmpty([
       ifProd(new webpack.optimize.DedupePlugin()),
@@ -47,5 +49,5 @@ module.exports = env => {
         },
       })),
     ])
-  });
+  }
 };

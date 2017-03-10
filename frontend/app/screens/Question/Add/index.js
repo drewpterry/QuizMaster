@@ -1,21 +1,15 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import TextEditor from 'components/editor';
 
 export default class Add extends Component {
-  //handleSubmit = (e) => {
-    //e.preventDefault();
-    //this.context.router.push({pathname: `/${this._input.value}`});
-  //}
 
-  render() {
+  render () {
     return (
-      <div>
-        <span>hill</span>
-      </div>
+     <div>
+       <div> Hello </div>
+       <TextEditor
+       />
+     </div>
     );
   }
 }
-
-//Home.contextTypes = {
-  //router: React.PropTypes.object.isRequired,
-//}

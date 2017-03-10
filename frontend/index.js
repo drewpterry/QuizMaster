@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, Link, IndexRoute, Redirect } from 'react-router';
+import RichTextEditor from 'react-rte';
 import App from './app/app.js';
 import Home from './app/screens/Home';
 import Quiz from './app/screens/Quiz';
