@@ -4,11 +4,20 @@ import Modal from 'react-modal';
 import TextEditor from 'components/editor';
 
 const customStyles = {
+  overlay : {
+    position          : 'fixed',
+    top               : 0,
+    left              : 0,
+    right             : 0,
+    bottom            : 0,
+    backgroundColor   : 'rgba(255, 255, 255, 0.75)'
+  },
   content : {
-    top                   : '50%',
+    top                   : '40%',
     left                  : '50%',
     right                 : 'auto',
     bottom                : 'auto',
+    width                 : '60%',
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)'
   }
@@ -38,6 +47,10 @@ export default class Home extends Component {
   closeModal() {
     this.setState({modalIsOpen: false});
   }
+
+   testFunction() {
+     return true
+  }
   render() {
     return (
       <div>
@@ -55,18 +68,28 @@ export default class Home extends Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <button onClick={this.closeModal}>close</button>
+          <button onClick={this.closeModal} type="button" className="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
 
           <h2 ref="subtitle">Create New Question</h2>
-          <TextEditor />
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
+          <div className="form-group">
+            <label className="control-label col-xs-2">Question</label>
+            <div className="col-xs-10">
+              <TextEditor
+
+              onChange={this.testFunction}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="control-label col-xs-2">Answer</label>
+            <div className="col-xs-10">
+              <input type="text" className="form-control" id="input-answer" placeholder="Answer"/>
+            </div>
+          </div>
+          <button type="button" className="btn btn-success pull-right">Create</button>
+          <button type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
         <div className="container">
           <table className="table">
@@ -99,7 +122,6 @@ export default class Home extends Component {
               </tr>
             </tbody>
           </table>
-          <Link to="addquestion"><button type="button" className="btn btn-success">Add a Question</button></Link>
           <button onClick={this.openModal} type="button" className="btn btn-success">Add a Question</button>
         </div>
       </div>
