@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Question API', type: :request do
   # initialize test data 
-  let!(:question) { create(:question) }
-  let(:question) { questions.first.id }
+  let!(:question) { create_list(:question, 10) }
+  let(:question_id) { question.first.id }
+  #let(:question_id) { 2 }
 
   # Test suite for GET /questions
   describe 'GET /questions' do
@@ -44,7 +45,7 @@ RSpec.describe 'Question API', type: :request do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Todo/)
+        expect(response.body).to match(/Couldn't find Question/)
       end
     end
   end
@@ -52,13 +53,13 @@ RSpec.describe 'Question API', type: :request do
   # Test suite for POST /questions
   describe 'POST /questions' do
     # valid payload
-    let(:valid_attributes) { { question: 'Learn Elm', created_by: '1' } }
+    let(:valid_attributes) { { question_content: 'Learn Elm', answer: '1' } }
 
     context 'when the request is valid' do
       before { post '/questions', params: valid_attributes }
 
       it 'creates a question' do
-        expect(json['question']).to eq('Learn Elm')
+        expect(json['question_content']).to eq('Learn Elm')
       end
 
       it 'returns status code 201' do
@@ -67,22 +68,23 @@ RSpec.describe 'Question API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/questions', params: { question: 'Foobar' } }
+      before { post '/questions', params: { question_content: 'Foobar' } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body)
-          .to match(/Validation failed: Created by can't be blank/)
+        expect(json['message'])
+          .to match("Validation failed: Answer can't be blank")
+
       end
     end
   end
 
   # Test suite for PUT /questions/:id
   describe 'PUT /questions/:id' do
-    let(:valid_attributes) { { question: 'Shopping' } }
+    let(:valid_attributes) { { question_content: 'Shopping' } }
 
     context 'when the record exists' do
       before { put "/questions/#{question_id}", params: valid_attributes }
