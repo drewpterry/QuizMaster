@@ -34,6 +34,7 @@ export default class Home extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.createQuestion = this.createQuestion.bind(this);
   }
   componentDidMount() {
     this.getQuestions()
@@ -58,11 +59,26 @@ export default class Home extends Component {
         const questions = response.data 
         this.setState({ questions });
         this.setState({ showList: true});
-        console.log(this.state.questions)
       }).catch(error => {
         this.setState({ questions: false });
         this.setState({ error: "oops something went wrong!"});
       });
+  }
+
+  createQuestion() {
+    axios.post('/api/questions', {
+      //question_content: 'THsIs is a Questions',
+      //answer: 'hello',
+      })
+      .then(response => {
+        this.getQuestions()
+      }).catch(error => {
+        console.log(error)
+      });
+  }
+  testFunction(value){
+    console.log(value)
+  
   }
 
   render() {
@@ -102,7 +118,6 @@ export default class Home extends Component {
             <label className="control-label col-xs-2">Question</label>
             <div className="col-xs-10">
               <TextEditor
-
               onChange={this.testFunction}
               />
             </div>
@@ -113,8 +128,8 @@ export default class Home extends Component {
               <input type="text" className="form-control" id="input-answer" placeholder="Answer"/>
             </div>
           </div>
-          <button type="button" className="btn btn-success pull-right">Create</button>
-          <button type="button" className="btn btn-default pull-right">Cancel</button>
+          <button onClick={this.createQuestion} type="button" className="btn btn-success pull-right">Create</button>
+          <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
         <div className="container">
           <table className="table">
