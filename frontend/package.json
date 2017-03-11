@@ -1,7 +1,7 @@
 {
-  "name": "react-example",
+  "name": "QuizMaster",
   "version": "1.0.0",
-  "description": "Simple React example app",
+  "description": "Rails and React Sample Quiz Application",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base ./ --env.dev",
@@ -24,17 +24,17 @@
   },
   "homepage": "https://github.com/mzabriskie/react-example",
   "dependencies": {
-    "axios": "0.13.1",
+    "axios": "^0.13.1",
     "bootstrap": "^3.3.5",
     "history": "^3.0.0",
+    "http-proxy-middleware": "^0.17.4",
     "moment": "^2.10.6",
     "react": "15.3.0",
     "react-dom": "15.3.0",
     "react-modal": "^1.7.2",
     "react-router": "2.6.1",
     "react-rte": "^0.11.0",
-    "react-tooltip": "3.1.5",
-    "webpack-validator": "^2.2.7"
+    "react-tooltip": "3.1.5"
   },
   "devDependencies": {
     "babel-core": "6.13.2",

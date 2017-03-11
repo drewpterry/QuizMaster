@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Modal from 'react-modal';
 import TextEditor from 'components/editor';
+import axios from 'axios';
 
 const customStyles = {
   overlay : {
@@ -27,12 +28,21 @@ export default class Home extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      questions: []
     };
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+  componentDidMount() {
+    axios.get('/api/questions')
+      .then(res => {
+        const questions = res.data.data.children.map(obj => obj.data);
+        console.log(res)
+        this.setState({ questions });
+      });
   }
 
   openModal() {

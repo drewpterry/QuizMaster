@@ -16,8 +16,15 @@ module.exports = env => {
     },
     devtool: ifProd('source-map', 'eval'),
     devServer: {
-      port: 8080,
-      historyApiFallback: true
+      port: 8020,
+      historyApiFallback: true,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          secure: false
+        } 
+      }
     },
     module: {
       loaders: [
