@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Modal from 'react-modal';
 import TextEditor from 'components/editor';
+import QuestionList from 'screens/Home/components/QuestionList.js';
 import axios from 'axios';
 
 const customStyles = {
@@ -28,7 +29,8 @@ export default class Home extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      questions: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -132,19 +134,10 @@ export default class Home extends Component {
           <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
         <div className="container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Question</th>
-                <th>Answer</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {questionList}
-            </tbody>
-          </table>
+          <QuestionList
+            questions={this.state.questions}
+         
+          ></QuestionList>
           <button onClick={this.openModal} type="button" className="btn btn-success">Add a Question</button>
         </div>
       </div>

@@ -1,38 +1,37 @@
+import React, {Component} from 'react';
+import axios from 'axios';
+
 export default class QuestionList extends Component {
 
   render() {
+
+    if(this.props.questions){
+      var questionList = this.props.questions.map(function(question, index) {
+        return <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{question.question_content}</td>
+                <td>{question.answer}</td>
+                <td><button type="button" className="btn btn-default">Edit</button></td>
+              </tr>;
+      })
+    } else {
+      var questionList = "Uh oh, we didn't get any data..." 
+    }
     return (
       <div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Question</th>
-              <th>Answer</th>
-              <th>HEEE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td><button type="button" className="btn btn-default">Edit</button></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Answer</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {questionList}
+            </tbody>
+          </table>
       </div>
     );
   }
