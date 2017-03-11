@@ -28,8 +28,7 @@ export default class Home extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false,
-      questions: []
+      modalIsOpen: false
     };
 
     this.openModal = this.openModal.bind(this);
@@ -37,12 +36,7 @@ export default class Home extends Component {
     this.closeModal = this.closeModal.bind(this);
   }
   componentDidMount() {
-    axios.get('/api/questions')
-      .then(res => {
-        const questions = res.data.data.children.map(obj => obj.data);
-        console.log(res)
-        this.setState({ questions });
-      });
+    this.getQuestions()
   }
 
   openModal() {
@@ -58,10 +52,31 @@ export default class Home extends Component {
     this.setState({modalIsOpen: false});
   }
 
-   testFunction() {
-     return true
+  getQuestions() {
+    axios.get('/api/questions')
+      .then(response => {
+        const questions = response.data 
+        this.setState({ questions });
+        this.setState({ showList: true});
+        console.log(this.state.questions)
+      }).catch(error => {
+        this.setState({ questions: false });
+        this.setState({ error: "oops something went wrong!"});
+      });
   }
+
   render() {
+
+    if(this.state.questions){
+      var questionList = this.state.questions.map(function(question, index) {
+        return <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{question.question_content}</td>
+                <td>{question.answer}</td>
+                <td><button type="button" className="btn btn-default">Edit</button></td>
+              </tr>;
+      })
+    }
     return (
       <div>
         <div className="jumbotron">
@@ -112,24 +127,7 @@ export default class Home extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><button type="button" className="btn btn-default">Edit</button></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              {questionList}
             </tbody>
           </table>
           <button onClick={this.openModal} type="button" className="btn btn-success">Add a Question</button>
@@ -138,7 +136,3 @@ export default class Home extends Component {
     );
   }
 }
-
-//Home.contextTypes = {
-  //router: React.PropTypes.object.isRequired,
-//}
