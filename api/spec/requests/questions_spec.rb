@@ -4,7 +4,6 @@ RSpec.describe 'Question API', type: :request do
   # initialize test data 
   let!(:question) { create_list(:question, 10) }
   let(:question_id) { question.first.id }
-  #let(:question_id) { 2 }
 
   # Test suite for GET /questions
   describe 'GET /questions' do
