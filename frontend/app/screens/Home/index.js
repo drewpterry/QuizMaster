@@ -37,6 +37,8 @@ export default class Home extends Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.createQuestion = this.createQuestion.bind(this);
+    this.getEditorText = this.getEditorText.bind(this);
+    this.inputChange = this.inputChange.bind(this);
   }
   componentDidMount() {
     this.getQuestions()
@@ -68,9 +70,10 @@ export default class Home extends Component {
   }
 
   createQuestion() {
+    console.log(this.state.questionContent)
     axios.post('/api/questions', {
-      //question_content: 'THsIs is a Questions',
-      //answer: 'hello',
+      question_content: this.state.questionContent,
+      answer: this.state.answerInput 
       })
       .then(response => {
         this.getQuestions()
@@ -78,9 +81,14 @@ export default class Home extends Component {
         console.log(error)
       });
   }
-  testFunction(value){
-    console.log(value)
-  
+
+  getEditorText(value){
+    const questionContent = value.toString('html')
+    this.setState({ questionContent })
+  }
+
+  inputChange(e) {
+    this.setState({ answerInput: e.target.value });
   }
 
   render() {
@@ -104,6 +112,7 @@ export default class Home extends Component {
             <p><Link to="quiz"><button type="button" className="btn btn-primary btn-lg">Take the Quiz!</button></Link></p>
           </div>
         </div>
+
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -120,19 +129,21 @@ export default class Home extends Component {
             <label className="control-label col-xs-2">Question</label>
             <div className="col-xs-10">
               <TextEditor
-              onChange={this.testFunction}
+              onChange={this.getEditorText}
               />
             </div>
           </div>
           <div className="form-group">
             <label className="control-label col-xs-2">Answer</label>
             <div className="col-xs-10">
-              <input type="text" className="form-control" id="input-answer" placeholder="Answer"/>
+              <input type="text" onChange={ this.inputChange } className="form-control" id="input-answer" placeholder="Answer"/>
             </div>
           </div>
+          <span>Created!</span>
           <button onClick={this.createQuestion} type="button" className="btn btn-success pull-right">Create</button>
           <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
+
         <div className="container">
           <QuestionList
             questions={this.state.questions}

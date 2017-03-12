@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import Tooltip from 'react-tooltip';
 import {getUserData} from '../../../utils/github-api'
-import ProfileStat from './ProfileStat'
 
 export default class Profile extends Component {
   constructor() {
@@ -35,9 +34,6 @@ export default class Profile extends Component {
           <h5>{user.login}</h5>
         </section>
         <section className="stats border-bottom">
-          <ProfileStat value={user.followers} label="followers" />
-          <ProfileStat value={user.public_repos} label="repositories" />
-          <ProfileStat value={user.following} label="following" />
         </section>
         <section className="orgs">
           <h4>Organizations</h4>

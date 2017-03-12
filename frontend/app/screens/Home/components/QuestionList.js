@@ -11,12 +11,16 @@ export default class QuestionList extends Component {
                 <th scope="row">{index + 1}</th>
                 <td>{question.question_content}</td>
                 <td>{question.answer}</td>
-                <td><button type="button" className="btn btn-default">Edit</button></td>
+                <td>
+                  <button type="button" className="btn btn-default">Edit</button>
+                  <button type="button" className="btn btn-danger">Delete</button>
+                </td>
               </tr>;
       })
     } else {
       var questionList = "Uh oh, we didn't get any data..." 
     }
+
     return (
       <div>
           <table className="table">
