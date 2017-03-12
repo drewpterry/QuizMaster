@@ -19,13 +19,27 @@ export default class QuestionList extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      message: false,
+      error: false
     };
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.setDeleteId = this.setDeleteId.bind(this);
+    this.deleteQuestion = this.deleteQuestion.bind(this);
   }
+
+  deleteQuestion(id) {
+    axios.delete('/api/questions/' + id)
+      .then(response => {
+        this.props.onChangeCallback()
+        this.setState({message: "Deletion Sucessful!"});
+      }).catch(error => {
+        this.setState({error: "Something went wrong!"});
+      });
+  }
+
 
   openModal() {
     this.setState({modalIsOpen: true});
@@ -42,6 +56,8 @@ export default class QuestionList extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+    this.setState({message: false});
+    this.setState({error: false});
   }
 
   renderQuestionList() {
@@ -65,15 +81,19 @@ export default class QuestionList extends Component {
   }
 
   render() {
+    console.log(this.state.message)
     return (
       <div>
         <DeleteModal
+          key="modal"
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="Delete Confirm"
+          deleteFunction={this.deleteQuestion}
           idToDelete={this.state.idToDelete}
-          onDelete={this.props.onChangeCallback}
+          message={this.state.message}
+          error={this.state.error}
         >
         </DeleteModal>
         <table className="table">
