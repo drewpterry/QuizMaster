@@ -9,7 +9,8 @@ export default class QuestionList extends Component {
       var questionList = this.props.questions.map(function(question, index) {
         return <tr key={index}>
                 <th scope="row">{index + 1}</th>
-                <td>{question.question_content}</td>
+                {/* Sanitized in Rails */}
+                <td dangerouslySetInnerHTML={{ __html:question.question_content}}></td>
                 <td>{question.answer}</td>
                 <td>
                   <button type="button" className="btn btn-default">Edit</button>
