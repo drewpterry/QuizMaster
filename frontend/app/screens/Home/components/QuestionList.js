@@ -81,7 +81,6 @@ export default class QuestionList extends Component {
   }
 
   render() {
-    console.log(this.state.message)
     return (
       <div>
         <DeleteModal
