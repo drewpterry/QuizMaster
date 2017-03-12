@@ -19,7 +19,7 @@ export default class QuestionList extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false,
+      modalIsOpen: false
     };
 
     this.openModal = this.openModal.bind(this);
@@ -37,14 +37,14 @@ export default class QuestionList extends Component {
 
   onDeleteClick(id){
     this.setDeleteId(id);
+    this.openModal();
   }
 
   closeModal() {
     this.setState({modalIsOpen: false});
   }
 
-  render() {
-
+  renderQuestionList() {
     if(this.props.questions){
       var questionList = this.props.questions.map(function(question, index) {
         return <tr key={index}>
@@ -58,10 +58,13 @@ export default class QuestionList extends Component {
                 </td>
               </tr>;
       }, this)
+      return questionList;
     } else {
-      var questionList = "Uh oh, we didn't get any data..." 
+      return  "Uh oh, we didn't get any data...";
     }
+  }
 
+  render() {
     return (
       <div>
         <DeleteModal
@@ -83,7 +86,7 @@ export default class QuestionList extends Component {
             </tr>
           </thead>
           <tbody>
-            {questionList}
+            {this.renderQuestionList()}
           </tbody>
         </table>
       </div>

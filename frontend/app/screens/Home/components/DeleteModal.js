@@ -18,6 +18,11 @@ export default class DeleteModal extends Component {
   constructor() {
     super();
 
+    this.state = {
+      message: false,
+      error: false,
+    };
+
     this.deleteQuestion = this.deleteQuestion.bind(this);
   }
 
@@ -25,11 +30,26 @@ export default class DeleteModal extends Component {
     axios.delete('/api/questions/' + id)
       .then(response => {
         this.props.onDelete()
+        this.setState({message: "Deletion Sucessful!"});
       }).catch(error => {
+        console.log(error)
+        this.setState({message: "Something went wrong!"});
       });
   }
 
   render() {
+    if(this.state.message){
+      var content = this.state.message
+    } else {
+      var content = 
+          <div>
+            <h2 ref="subtitle">Are you sure you want to delete this?</h2>
+            {this.state.error} 
+            <button onClick={() => {this.deleteQuestion(this.props.idToDelete)}} type="button" className="btn btn-alert pull-right">Delete</button>
+            <button onClick={this.props.onRequestClose} type="button" className="btn btn-default pull-right">Cancel</button>
+          </div>;
+    }
+
     return (
       <div>
         <Modal
@@ -41,11 +61,7 @@ export default class DeleteModal extends Component {
           <button onClick={this.props.onRequestClose} type="button" className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-
-          <h2 ref="subtitle">Are you sure you want to delete this?</h2>
-          <span>Creaed!</span>
-          <button onClick={() => {this.deleteQuestion(this.props.idToDelete)}} type="button" className="btn btn-alert pull-right">Delete</button>
-          <button onClick={this.props.onRequestClose} type="button" className="btn btn-default pull-right">Cancel</button>
+          {content}
         </Modal>
       </div>
     );

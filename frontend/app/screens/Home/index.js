@@ -6,14 +6,6 @@ import QuestionList from 'screens/Home/components/QuestionList.js';
 import axios from 'axios';
 
 const customStyles = {
-  overlay : {
-    position          : 'fixed',
-    top               : 0,
-    left              : 0,
-    right             : 0,
-    bottom            : 0,
-    backgroundColor   : 'rgba(255, 255, 255, 0.75)'
-  },
   content : {
     top                   : '40%',
     left                  : '50%',
@@ -105,13 +97,6 @@ export default class Home extends Component {
     }
     return (
       <div>
-        <div className="jumbotron">
-          <div className="container">
-            <h1>Quiz Master</h1>
-            <p>...</p>
-            <p><Link to="quiz"><button type="button" className="btn btn-primary btn-lg">Take the Quiz!</button></Link></p>
-          </div>
-        </div>
 
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -143,6 +128,14 @@ export default class Home extends Component {
           <button onClick={this.createQuestion} type="button" className="btn btn-success pull-right">Create</button>
           <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
+
+        <div className="jumbotron">
+          <div className="container">
+            <h1>Quiz Master</h1>
+            <p>...</p>
+            <p><Link to="quiz"><button type="button" className="btn btn-primary btn-lg">Take the Quiz!</button></Link></p>
+          </div>
+        </div>
 
         <div className="container">
           <QuestionList
