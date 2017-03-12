@@ -36,6 +36,7 @@ export default class Home extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
     this.createQuestion = this.createQuestion.bind(this);
     this.getEditorText = this.getEditorText.bind(this);
     this.inputChange = this.inputChange.bind(this);
@@ -57,7 +58,7 @@ export default class Home extends Component {
     this.setState({modalIsOpen: false});
   }
 
-  getQuestions() {
+  getQuestions(callback) {
     axios.get('/api/questions')
       .then(response => {
         const questions = response.data 
@@ -70,7 +71,6 @@ export default class Home extends Component {
   }
 
   createQuestion() {
-    console.log(this.state.questionContent)
     axios.post('/api/questions', {
       question_content: this.state.questionContent,
       answer: this.state.answerInput 
@@ -94,7 +94,7 @@ export default class Home extends Component {
   render() {
 
     if(this.state.questions){
-      var questionList = this.state.questions.map(function(question, index) {
+      let questionList = this.state.questions.map(function(question, index) {
         return <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{question.question_content}</td>
@@ -147,7 +147,7 @@ export default class Home extends Component {
         <div className="container">
           <QuestionList
             questions={this.state.questions}
-         
+            onChangeCallback={this.getQuestions}
           ></QuestionList>
           <button onClick={this.openModal} type="button" className="btn btn-success">Add a Question</button>
         </div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import DeleteModal from 'screens/Home/components/DeleteModal';
 
 const customStyles = {
   content : {
@@ -23,31 +24,23 @@ export default class QuestionList extends Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.setDeleteId = this.setDeleteId.bind(this);
   }
 
   openModal() {
     this.setState({modalIsOpen: true});
   }
 
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
+  setDeleteId(id) {
+    this.setState({idToDelete: id});
+  }
+
+  onDeleteClick(id){
+    this.setDeleteId(id);
   }
 
   closeModal() {
     this.setState({modalIsOpen: false});
-  }
-
-  deleteQuestions(id) {
-    axios.delete('/api/questions/' + id)
-      .then(response => {
-        const questions = response.data 
-        this.setState({ questions });
-        this.setState({ showList: true});
-      }).catch(error => {
-        this.setState({ questions: false });
-        this.setState({ error: "oops something went wrong!"});
-      });
   }
 
   render() {
@@ -61,7 +54,7 @@ export default class QuestionList extends Component {
                 <td>{question.answer}</td>
                 <td>
                   <button type="button" className="btn btn-default">Edit</button>
-                  <button onClick={this.openModal} type="button" className="btn btn-danger">Delete</button>
+                  <button onClick={ () => {this.onDeleteClick(question.id)}} type="button" className="btn btn-danger">Delete</button>
                 </td>
               </tr>;
       }, this)
@@ -71,22 +64,15 @@ export default class QuestionList extends Component {
 
     return (
       <div>
-        <Modal
+        <DeleteModal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="Delete Confirm"
+          idToDelete={this.state.idToDelete}
+          onDelete={this.props.onChangeCallback}
         >
-          <button onClick={this.closeModal} type="button" className="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-
-          <h2 ref="subtitle">Are you sure you want to delete this?</h2>
-          <span>Created!</span>
-          <button type="button" className="btn btn-alert pull-right">Delete</button>
-          <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
-        </Modal>
-
+        </DeleteModal>
         <table className="table">
           <thead>
             <tr>
