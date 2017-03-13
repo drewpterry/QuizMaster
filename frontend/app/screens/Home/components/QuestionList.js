@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import EditModal from 'screens/Home/components/EditDeleteModal';
 import DeleteModal from 'screens/Home/components/DeleteModal';
 
 const customStyles = {
@@ -26,8 +27,12 @@ export default class QuestionList extends Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.setDeleteId = this.setDeleteId.bind(this);
+    this.setQuestionId= this.setQuestionId.bind(this);
     this.deleteQuestion = this.deleteQuestion.bind(this);
+    this.getQuestion = this.getQuestion.bind(this);
+    this.setEditState = this.setEditState.bind(this);
+    this.inputChange = this.inputChange.bind(this);
+    this.getEditorText = this.getEditorText.bind(this);
   }
 
   deleteQuestion(id) {
@@ -40,23 +45,71 @@ export default class QuestionList extends Component {
       });
   }
 
-  openModal() {
-    this.setState({modalIsOpen: true});
+  getQuestion(id, successCallback, failCallback) {
+    axios.get('/api/questions/' + id)
+      .then(response => {
+        console.log(response.data)
+        successCallback(response.data)
+      }).catch(error => {
+      });
   }
 
-  setDeleteId(id) {
-    this.setState({idToDelete: id});
+  openModal(modalType) {
+    switch(modalType) {
+      case 'delete':
+        this.setState({modalIsOpen: true});
+      case 'edit':
+        this.setState({editModalIsOpen: true});
+    }
   }
 
-  onDeleteClick(id){
-    this.setDeleteId(id);
-    this.openModal();
+  setQuestionId(id) {
+    this.setState({questionId: id});
   }
+
+  onEditOrDeleteClick(id, modalType){
+    this.setQuestionId(id);
+    switch(modalType) {
+      case 'delete':
+        this.openModal(modalType);
+      case 'edit':
+        this.getQuestion(id, this.setEditState)
+    }
+  }
+
+  setEditState(question){
+    this.setState({questionValue: question.question_content});
+    this.setState({answerValue: "hellos"});
+    this.openModal('edit');
+  }
+
 
   closeModal() {
     this.setState({modalIsOpen: false});
+    this.setState({editModalIsOpen: false});
     this.setState({message: false});
     this.setState({error: false});
+  }
+
+  createQuestion() {
+    axios.post('/api/questions', {
+      question_content: this.state.questionContent,
+      answer: this.state.answerInput 
+      })
+      .then(response => {
+        this.getQuestions()
+      }).catch(error => {
+        console.log(error)
+      });
+  }
+
+  getEditorText(value){
+    const questionContent = value.toString('html')
+    this.setState({ questionContent })
+  }
+
+  inputChange(e) {
+    this.setState({ answerInput: e.target.value });
   }
 
   renderQuestionList() {
@@ -68,8 +121,8 @@ export default class QuestionList extends Component {
                 <td dangerouslySetInnerHTML={{ __html:question.question_content}}></td>
                 <td>{question.answer}</td>
                 <td>
-                  <button type="button" className="btn btn-default">Edit</button>
-                  <button onClick={ () => {this.onDeleteClick(question.id)}} type="button" className="btn btn-danger">Delete</button>
+                  <button onClick={ () => {this.onEditOrDeleteClick(question.id, 'edit')}} type="button" className="btn btn-default">Edit</button>
+                  <button onClick={ () => {this.onEditOrDeleteClick(question.id, 'delete')}} type="button" className="btn btn-danger">Delete</button>
                 </td>
               </tr>;
       }, this)
@@ -82,6 +135,19 @@ export default class QuestionList extends Component {
   render() {
     return (
       <div>
+        <EditModal
+          isOpen={this.state.editModalIsOpen}
+          onAfterOpen={this.state.afterOpenModal}
+          closeModal={this.closeModal}
+          title={"Edit Question"}
+          editorValue={this.state.questionValue}
+          answerValue={this.state.answerValue}
+          actionButtonName={"Submit"}
+          editorChange={this.getEditorText}
+          inputChange={this.inputChange}
+          actionClick={this.createQuestion}
+        >
+        </EditModal>
         <DeleteModal
           key="modal"
           isOpen={this.state.modalIsOpen}
@@ -89,7 +155,7 @@ export default class QuestionList extends Component {
           style={customStyles}
           contentLabel="Delete Confirm"
           deleteFunction={this.deleteQuestion}
-          idToDelete={this.state.idToDelete}
+          idToDelete={this.state.questionId}
           message={this.state.message}
           error={this.state.error}
         >
@@ -112,4 +178,3 @@ export default class QuestionList extends Component {
     );
   }
 }
-

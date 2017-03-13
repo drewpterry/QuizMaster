@@ -10,10 +10,23 @@ export default class MyStatefulEditor extends Component {
     }
   }
 
+  componentDidMount(){
+    this.setInitialValue(this.props.value)
+  }
+
   static propTypes = {
     onChange: PropTypes.func
   };
 
+  setInitialValue(string) {
+    if (string) {
+      var initialValue = RichTextEditor.createValueFromString(string, 'html')
+    } else {
+      console.log('ma')
+      var initialValue = RichTextEditor.createEmptyValue()
+    }
+    this.setState({value: initialValue})
+  }
 
   onChange = (value) => {
     this.setState({value});
@@ -37,7 +50,6 @@ export default class MyStatefulEditor extends Component {
         value={this.state.value}
         onChange={this.onChange}
         toolbarConfig={toolbarConfig}
-        autoFocus={true}
         placeholder={'Question'}
       />
     );

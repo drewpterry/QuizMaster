@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Modal from 'react-modal';
 import TextEditor from 'components/editor';
-import QuestionList from 'screens/Home/components/QuestionList.js';
+import CreateModal from 'screens/Home/components/EditDeleteModal';
+import QuestionList from 'screens/Home/components/QuestionList';
 import axios from 'axios';
 
 const customStyles = {
@@ -26,24 +27,19 @@ export default class Home extends Component {
     };
 
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
     this.createQuestion = this.createQuestion.bind(this);
     this.getEditorText = this.getEditorText.bind(this);
     this.inputChange = this.inputChange.bind(this);
   }
+
   componentDidMount() {
     this.getQuestions()
   }
 
   openModal() {
     this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
   }
 
   closeModal() {
@@ -97,38 +93,6 @@ export default class Home extends Component {
     }
     return (
       <div>
-
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <button onClick={this.closeModal} type="button" className="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-
-          <h2 ref="subtitle">Create New Question</h2>
-          <div className="form-group">
-            <label className="control-label col-xs-2">Question</label>
-            <div className="col-xs-10">
-              <TextEditor
-              onChange={this.getEditorText}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="control-label col-xs-2">Answer</label>
-            <div className="col-xs-10">
-              <input type="text" onChange={ this.inputChange } className="form-control" id="input-answer" placeholder="Answer"/>
-            </div>
-          </div>
-          <span>Created!</span>
-          <button onClick={this.createQuestion} type="button" className="btn btn-success pull-right">Create</button>
-          <button onClick={this.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
-        </Modal>
-
         <div className="jumbotron">
           <div className="container">
             <h1>Quiz Master</h1>
@@ -142,7 +106,19 @@ export default class Home extends Component {
             questions={this.state.questions}
             onChangeCallback={this.getQuestions}
           ></QuestionList>
+
           <button onClick={this.openModal} type="button" className="btn btn-success">Add a Question</button>
+          <CreateModal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.state.afterOpenModal}
+            closeModal={this.closeModal}
+            title={"Create New Question"}
+            actionButtonName={"Create"}
+            editorChange={this.getEditorText}
+            inputChange={this.inputChange}
+            actionClick={this.createQuestion}
+          >
+          </CreateModal>
         </div>
       </div>
     );
