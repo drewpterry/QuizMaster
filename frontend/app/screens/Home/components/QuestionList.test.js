@@ -4,12 +4,11 @@ import QuestionList from './QuestionList';
 
 describe('QuestionList', () => {
   it('should render the `question` in <table>', () => {
-    const value = "hello";
     const wrapper = renderComponent();
     expect(wrapper.find('tbody')).to.contain.text('The first question');
   });
 
-  it('should render the `question` in <table>', () => {
+  it('should render the `error message` in <table>', () => {
     const message = "Uh oh, we didn't get any data...";
     const wrapper = renderComponent({false});
     expect(wrapper.find('tbody')).to.contain.text(message);

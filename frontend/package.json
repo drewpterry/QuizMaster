@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server --inline --content-base ./ --env.dev",
     "build": "webpack --env.prod",
     "lint": "eslint app test",
-    "test": "cross-env NODE_ENV=test nyc mocha",
+    "test": "NODE_PATH=./app NODE_ENV=test nyc mocha",
+    "tests": "mocha-webpack --webpack-config webpack.config.js \"app/**/*.test.js\"",
     "watch:test": "mocha --watch --compilers js:babel-register",
     "start": "http-server",
     "setup": "npm install && npm run validate",
@@ -56,7 +57,7 @@
     "http-server": "0.9.0",
     "jsdom": "9.4.1",
     "lodash": "4.14.2",
-    "mocha": "3.0.2",
+    "mocha": "^3.2.0",
     "moxios": "0.3.0",
     "npm-run-all": "2.3.0",
     "nyc": "7.1.0",
@@ -65,18 +66,17 @@
     "sinon-chai": "2.8.0",
     "starwars-names": "1.6.0",
     "style-loader": "^0.13.0",
-    "webpack": "2.1.0-beta.20",
+    "webpack": "^2.2.1",
     "webpack-config-utils": "2.0.0",
-    "webpack-dev-server": "2.1.0-beta.0",
-    "webpack-validator": "2.2.7"
+    "webpack-dev-server": "2.1.0-beta.0"
   },
   "nyc": {
     "all": true,
     "check-coverage": true,
-    "branches": 100,
-    "function": 100,
-    "lines": 100,
-    "statements": 100,
+    "branches": 80,
+    "function": 80,
+    "lines": 80,
+    "statements": 80,
     "reporter": [
       "text",
       "lcov"

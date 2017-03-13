@@ -18,23 +18,6 @@ export default class DeleteModal extends Component {
   constructor() {
     super();
 
-    this.resetState = this.resetState.bind(this);
-  }
-
-  deleteQuestion = (id) => {
-    axios.delete('/api/questions/' + id)
-      .then(response => {
-        this.props.onDelete()
-        this.setState({message: "Deletion Sucessful!"});
-      }).catch(error => {
-        console.log(error)
-        this.setState({message: "Something went wrong!"});
-      });
-  }
-
-  resetState(){
-    this.setState({message: false});
-    this.setState({error: false});
   }
 
   render() {
