@@ -16,7 +16,6 @@ const customStyles = {
 export default class EditDeleteModal extends Component {
 
   render() {
-
     return (
       <div>
         <Modal
@@ -47,6 +46,7 @@ export default class EditDeleteModal extends Component {
               <input onChange={this.props.inputChange} type="text" className="form-control" id="input-answer" placeholder="Answer" value={this.props.answerValue}/>
             </div>
           </div>
+          <span>{this.props.error}</span>
 
           <button onClick={this.props.actionClick} type="button" className="btn btn-success pull-right">{this.props.actionButtonName}</button>
           <button onClick={this.props.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>

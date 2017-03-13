@@ -64,7 +64,6 @@ export default class QuestionList extends Component {
       })
       .then(response => {
         this.props.onChangeCallback()
-        console.log(response.data)
       }).catch(error => {
       });
   }
@@ -118,7 +117,8 @@ export default class QuestionList extends Component {
       .then(response => {
         this.getQuestions()
       }).catch(error => {
-        console.log(error)
+        var errorMessage = error.response.data.message;
+        this.setState({error: errorMessage});
       });
   }
 

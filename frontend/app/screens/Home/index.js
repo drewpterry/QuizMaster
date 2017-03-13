@@ -55,7 +55,8 @@ export default class Home extends Component {
       .then(response => {
         this.getQuestions()
       }).catch(error => {
-        console.log(error)
+        var errorMessage = error.response.data.message;
+        this.setState({error: errorMessage});
       });
   }
 
@@ -96,6 +97,7 @@ export default class Home extends Component {
             editorChange={this.getEditorText}
             inputChange={this.inputChange}
             actionClick={this.createQuestion}
+            error={this.state.error}
           >
           </CreateModal>
         </div>
