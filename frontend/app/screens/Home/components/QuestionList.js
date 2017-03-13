@@ -57,7 +57,6 @@ export default class QuestionList extends Component {
   }
 
   updateQuestion() {
-    console.log("IN UPDATE")
     axios.put('/api/questions/' + this.state.questionId, {
       question_content: this.state.questionContent,
       answer: this.state.answerInput 
@@ -117,8 +116,6 @@ export default class QuestionList extends Component {
       .then(response => {
         this.getQuestions()
       }).catch(error => {
-        var errorMessage = error.response.data.message;
-        this.setState({error: errorMessage});
       });
   }
 

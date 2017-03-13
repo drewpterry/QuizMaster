@@ -9,7 +9,7 @@ export default class Quiz extends Component {
     super();
 
     this.state = {
-      modalIsOpen: true,
+      modalIsOpen: false,
       questions: false,
       correctCount: 0,
       incorrectCount: 0,
@@ -69,9 +69,9 @@ export default class Quiz extends Component {
 
   incrementCount(countType) {
     if (countType === 'correct') {
-        this.setState({correctCount: this.state.correctCount + 1})
+      this.setState({correctCount: this.state.correctCount + 1})
     } else {
-        this.setState({incorrectCount: this.state.incorrectCount + 1})
+      this.setState({incorrectCount: this.state.incorrectCount + 1})
     }
   }
 

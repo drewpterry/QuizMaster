@@ -7,7 +7,7 @@ export default class ScoreTracker extends Component {
       <div>
         <div className="col-md-2 col-md-offset-2 pull-left">
           <span className="col-md-12 text-center">Remaining</span>
-          <span className="col-md-12 text-center">{this.props.remaining}</span>
+          <span className="col-md-12 text-center">{this.props.remainin}</span>
         </div>
         <div className="col-md-2 pull-left">
           <span className="col-md-12 text-center">Wrong</span>
