@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import wordsToNumbers from 'words-to-numbers';
+import ScoreTracker from 'screens/Quiz/components/ScoreTracker';
 
 export default class Quiz extends Component {
   constructor() {
@@ -90,28 +91,19 @@ export default class Quiz extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-2 col-md-offset-2 pull-left">
-            <span className="col-md-12 text-center">Remaining</span>
-            <span className="col-md-12 text-center">{this.state.remaining}</span>
-          </div>
-          <div className="col-md-2 pull-left">
-            <span className="col-md-12 text-center">Wrong</span>
-            <span className="col-md-12 text-center">{this.state.incorrectCount}</span>
-          </div>
-          <div className="col-md-2 pull-left">
-            <span className="col-md-12 text-center">Right</span>
-            <span className="col-md-12 text-center">{this.state.correctCount}</span>
-          </div>
-          <div className="col-md-2 pull-left">
-            <span className="col-md-12 text-center">Score</span>
-            <span className="col-md-12 text-center">{this.score()}</span>
-          </div>
+          <ScoreTracker
+            remaining={this.state.remaining}
+            incorrectCount={this.state.incorrectCount}
+            correctCount={this.state.correctCount}
+            score={this.score()}
+          >
+          </ScoreTracker>
 
           <div id="question-holder" className="col-md-8 col-md-offset-2 text-center">
-            <span dangerouslySetInnerHTML={{ __html:this.currentQuestion('question_content')}}></span>
+            <h2 dangerouslySetInnerHTML={{ __html:this.currentQuestion('question_content')}}></h2>
           </div>
           <div id="answer-holder" className="col-md-8 col-md-offset-2 text-center">
-            {this.currentQuestion('answer')}
+            <h3> {this.currentQuestion('answer')} </h3>
           </div>
           <div className="col-md-8 col-md-offset-2 text-center">
             <div className="input-group">

@@ -4,11 +4,9 @@ import sinon from 'sinon';
 import DeleteModal from './DeleteModal';
 
 describe('DeleteModal', () => {
-    console.log("meee")
   it('should render the `question` in <table>', () => {
     const deleteFunctionStub = sinon.stub();
     const wrapper = renderComponent({message: 'hello', error: false, isOpen: true,  deleteFunction: deleteFunctionStub, onRequestClose: deleteFunctionStub, idToDelete: 5 });
-    console.log(wrapper)
     expect(wrapper.find('div')).to.contain.text('Are you sure you want to delete this?');
   });
 

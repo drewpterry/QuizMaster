@@ -40,7 +40,6 @@ export default class QuestionList extends Component {
       });
   }
 
-
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -95,6 +94,7 @@ export default class QuestionList extends Component {
           error={this.state.error}
         >
         </DeleteModal>
+
         <table className="table">
           <thead>
             <tr>
