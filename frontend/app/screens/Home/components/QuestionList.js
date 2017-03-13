@@ -43,7 +43,8 @@ export default class QuestionList extends Component {
         this.props.onChangeCallback()
         this.setState({message: "Deletion Sucessful!"});
       }).catch(error => {
-        this.setState({error: "Something went wrong!"});
+        var errorMessage = 'Question not deleted: ' + error.response.data.message;
+        this.setState({error: errorMessage});
       });
   }
 
@@ -72,8 +73,10 @@ export default class QuestionList extends Component {
     switch(modalType) {
       case 'delete':
         this.setState({modalIsOpen: true});
+        break;
       case 'edit':
         this.setState({editModalIsOpen: true});
+        break;
     }
   }
 
@@ -86,8 +89,10 @@ export default class QuestionList extends Component {
     switch(modalType) {
       case 'delete':
         this.openModal(modalType);
+        break;
       case 'edit':
         this.getQuestion(id, this.setEditState)
+        break;
     }
   }
 

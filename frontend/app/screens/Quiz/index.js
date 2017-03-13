@@ -2,18 +2,21 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import wordsToNumbers from 'words-to-numbers';
 import ScoreTracker from 'screens/Quiz/components/ScoreTracker';
+import Modal from 'react-modal';
 
 export default class Quiz extends Component {
   constructor() {
     super();
 
     this.state = {
-      modalIsOpen: false,
+      modalIsOpen: true,
       questions: false,
       correctCount: 0,
       incorrectCount: 0,
       remaining: false,
-      questionIndex: 0
+      questionIndex: 0,
+      showAnswer: false,
+      answerInput: '' 
     };
 
     this.openModal = this.openModal.bind(this);
@@ -24,6 +27,7 @@ export default class Quiz extends Component {
     this.answerCorrect = this.answerCorrect.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.score = this.score.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.makePercent = this.makePercent.bind(this);
     this.getQuestions();
   }
@@ -54,14 +58,38 @@ export default class Quiz extends Component {
     }
   }
 
-  submitAnswer() {
-    if(this.answerCorrect(this.state.answerInput)){
-      this.setState({correctCount: this.state.correctCount + 1})
+  renderAnswer() {
+    var answer = this.state.showAnswer ? this.currentQuestion('answer') : '';
+    return answer
+  }
+
+  nextQuestion() {
+    this.setState({ questionIndex: this.state.questionIndex + 1})
+  }
+
+  incrementCount(countType) {
+    if (countType === 'correct') {
+        this.setState({correctCount: this.state.correctCount + 1})
     } else {
-      this.setState({incorrectCount: this.state.incorrectCount + 1})
+        this.setState({incorrectCount: this.state.incorrectCount + 1})
+    }
+  }
+
+  submitAnswer() {
+    this.setState({showAnswer: true});
+    if(this.answerCorrect(this.state.answerInput)){
+      this.incrementCount('correct');
+    } else {
+      this.incrementCount('incorrect');
     }
     this.setState({ remaining: this.state.remaining - 1})
-    this.setState({ questionIndex: this.state.questionIndex + 1})
+
+    var self = this;
+    setTimeout(function(){
+      self.nextQuestion();
+      self.setState({showAnswer: false});
+      self.textInput.value = '';
+    }, 2000);
   }
 
   answerCorrect(user_answer) {
@@ -87,7 +115,6 @@ export default class Quiz extends Component {
   }
 
   render() {
-    var currentQuestion = this.currentQuestion();
     return (
       <div>
         <div className="row">
@@ -103,17 +130,24 @@ export default class Quiz extends Component {
             <h2 dangerouslySetInnerHTML={{ __html:this.currentQuestion('question_content')}}></h2>
           </div>
           <div id="answer-holder" className="col-md-8 col-md-offset-2 text-center">
-            <h3> {this.currentQuestion('answer')} </h3>
+            <h3> {this.renderAnswer()} </h3>
           </div>
           <div className="col-md-8 col-md-offset-2 text-center">
             <div className="input-group">
-              <input onChange={this.inputChange} type="text"className="form-control" placeholder="Answer"/>
+              <input onChange={this.inputChange} ref={(input) => { this.textInput = input; }} type="text" className="form-control" placeholder="Answer"/>
               <span className="input-group-btn">
                 <button onClick={this.submitAnswer} className="btn btn-default" type="button">Go!</button>
               </span>
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.score}
+          contentLabel="Create Modal"
+        >
+        Complete
+        </Modal>
       </div>
     );
   }

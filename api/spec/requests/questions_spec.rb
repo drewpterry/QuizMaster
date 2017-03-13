@@ -51,7 +51,6 @@ RSpec.describe 'Question API', type: :request do
 
   # Test suite for POST /questions
   describe 'POST /questions' do
-    # valid payload
     let(:valid_attributes) { { question_content: 'Learn Elm', answer: '1' } }
 
     context 'when the request is valid' do

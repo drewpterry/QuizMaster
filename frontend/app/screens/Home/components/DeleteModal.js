@@ -15,13 +15,7 @@ const customStyles = {
 };
 export default class DeleteModal extends Component {
 
-  constructor() {
-    super();
-
-  }
-
-  render() {
-
+  modalContent() {
     if(this.props.message){
       var content = this.props.message
     } else {
@@ -33,7 +27,10 @@ export default class DeleteModal extends Component {
             <button onClick={this.props.onRequestClose} type="button" className="btn btn-default pull-right">Cancel</button>
           </div>;
     }
+    return content;
+  }
 
+  render() {
     return (
       <div>
         <Modal
@@ -45,7 +42,7 @@ export default class DeleteModal extends Component {
           <button onClick={this.props.onRequestClose} type="button" className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          {content}
+          {this.modalContent()}
         </Modal>
       </div>
     );

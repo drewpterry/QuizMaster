@@ -35,7 +35,7 @@ export default class Home extends Component {
     this.setState({modalIsOpen: false});
   }
 
-  getQuestions(callback) {
+  getQuestions() {
     axios.get('/api/questions')
       .then(response => {
         const questions = response.data 
@@ -70,16 +70,6 @@ export default class Home extends Component {
 
   render() {
 
-    if(this.state.questions){
-      let questionList = this.state.questions.map(function(question, index) {
-        return <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                <td>{question.question_content}</td>
-                <td>{question.answer}</td>
-                <td><button type="button" className="btn btn-default">Edit</button></td>
-              </tr>;
-      })
-    }
     return (
       <div>
         <div className="jumbotron">
