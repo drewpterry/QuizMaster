@@ -15,6 +15,7 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
+
 export default class QuestionList extends Component {
   constructor() {
     super();
@@ -29,6 +30,7 @@ export default class QuestionList extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.setQuestionId= this.setQuestionId.bind(this);
     this.deleteQuestion = this.deleteQuestion.bind(this);
+    this.updateQuestion = this.updateQuestion.bind(this);
     this.getQuestion = this.getQuestion.bind(this);
     this.setEditState = this.setEditState.bind(this);
     this.inputChange = this.inputChange.bind(this);
@@ -48,8 +50,20 @@ export default class QuestionList extends Component {
   getQuestion(id, successCallback, failCallback) {
     axios.get('/api/questions/' + id)
       .then(response => {
-        console.log(response.data)
         successCallback(response.data)
+      }).catch(error => {
+      });
+  }
+
+  updateQuestion() {
+    console.log("IN UPDATE")
+    axios.put('/api/questions/' + this.state.questionId, {
+      question_content: this.state.questionContent,
+      answer: this.state.answerInput 
+      })
+      .then(response => {
+        this.props.onChangeCallback()
+        console.log(response.data)
       }).catch(error => {
       });
   }
@@ -79,7 +93,7 @@ export default class QuestionList extends Component {
 
   setEditState(question){
     this.setState({questionValue: question.question_content});
-    this.setState({answerValue: "hellos"});
+    this.setState({answerInput: question.answer});
     this.openModal('edit');
   }
 
@@ -141,11 +155,11 @@ export default class QuestionList extends Component {
           closeModal={this.closeModal}
           title={"Edit Question"}
           editorValue={this.state.questionValue}
-          answerValue={this.state.answerValue}
+          answerValue={this.state.answerInput}
           actionButtonName={"Submit"}
           editorChange={this.getEditorText}
           inputChange={this.inputChange}
-          actionClick={this.createQuestion}
+          actionClick={this.updateQuestion}
         >
         </EditModal>
         <DeleteModal

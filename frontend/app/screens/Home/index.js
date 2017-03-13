@@ -6,17 +6,6 @@ import CreateModal from 'screens/Home/components/EditDeleteModal';
 import QuestionList from 'screens/Home/components/QuestionList';
 import axios from 'axios';
 
-const customStyles = {
-  content : {
-    top                   : '40%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    width                 : '60%',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 export default class Home extends Component {
   constructor() {
     super();

@@ -40,12 +40,14 @@ export default class EditDeleteModal extends Component {
               />
             </div>
           </div>
+
           <div className="form-group">
             <label className="control-label col-md-2">Answer</label>
             <div className="col-md-10">
               <input onChange={this.props.inputChange} type="text" className="form-control" id="input-answer" placeholder="Answer" value={this.props.answerValue}/>
             </div>
           </div>
+
           <button onClick={this.props.actionClick} type="button" className="btn btn-success pull-right">{this.props.actionButtonName}</button>
           <button onClick={this.props.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
         </Modal>
