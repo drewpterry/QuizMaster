@@ -18,9 +18,6 @@ export default class DeleteModal extends Component {
   constructor() {
     super();
 
-    console.log("constrcutor")
-    this.state = {
-    };
     this.resetState = this.resetState.bind(this);
   }
 
@@ -36,14 +33,11 @@ export default class DeleteModal extends Component {
   }
 
   resetState(){
-    console.log('hello')
     this.setState({message: false});
     this.setState({error: false});
   }
 
   render() {
-    console.log(this.props.isOpen)
-    console.log("render")
 
     if(this.props.message){
       var content = this.props.message

@@ -34,7 +34,8 @@
     "react-modal": "^1.7.2",
     "react-router": "2.6.1",
     "react-rte": "^0.11.0",
-    "react-tooltip": "3.1.5"
+    "react-tooltip": "3.1.5",
+    "words-to-numbers": "^1.2.1"
   },
   "devDependencies": {
     "babel-core": "6.13.2",
