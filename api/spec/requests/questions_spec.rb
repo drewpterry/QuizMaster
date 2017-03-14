@@ -78,7 +78,6 @@ RSpec.describe 'Question API', type: :request do
       it 'returns a validation failure message' do
         expect(json['message'])
           .to match("Validation failed: Answer can't be blank")
-
       end
     end
   end
