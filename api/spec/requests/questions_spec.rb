@@ -5,13 +5,13 @@ RSpec.describe 'Question API', type: :request do
   let!(:question) { create_list(:question, 10) }
   let(:question_id) { question.first.id }
   before(:all) do
-    base_url = 'api' 
+    @base_url = '/api' 
   end
 
   # Test suite for GET /questions
-  describe 'GET api/questions' do
+  describe 'GET /questions' do
     # make HTTP get request before each example
-    before { get 'api/questions' }
+    before { get @base_url + '/questions' }
 
     it 'returns questions' do
       # Note `json` is a custom helper to parse JSON responses
@@ -26,7 +26,7 @@ RSpec.describe 'Question API', type: :request do
 
   # Test suite for GET /questions/:id
   describe 'GET /questions/:id' do
-    before { get "api/questions/#{question_id}" }
+    before { get @base_url + "/questions/#{question_id}" }
 
     context 'when the record exists' do
       it 'returns the question' do
@@ -57,7 +57,7 @@ RSpec.describe 'Question API', type: :request do
     let(:valid_attributes) { { question_content: 'Learn Elm', answer: '1' } }
 
     context 'when the request is valid' do
-      before { post '/questions', params: valid_attributes }
+      before { post @base_url + '/questions', params: valid_attributes }
 
       it 'creates a question' do
         expect(json['question_content']).to eq('Learn Elm')
@@ -69,7 +69,7 @@ RSpec.describe 'Question API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/questions', params: { question_content: 'Foobar' } }
+      before { post @base_url + '/questions', params: { question_content: 'Foobar' } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -88,7 +88,7 @@ RSpec.describe 'Question API', type: :request do
     let(:valid_attributes) { { question_content: 'Shopping' } }
 
     context 'when the record exists' do
-      before { put "/questions/#{question_id}", params: valid_attributes }
+      before { put @base_url + "/questions/#{question_id}", params: valid_attributes }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -102,7 +102,7 @@ RSpec.describe 'Question API', type: :request do
 
   # Test suite for DELETE /questions/:id
   describe 'DELETE /questions/:id' do
-    before { delete "/questions/#{question_id}" }
+    before { delete @base_url + "/questions/#{question_id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
