@@ -35,6 +35,7 @@ export default class QuestionList extends Component {
     this.setEditState = this.setEditState.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.getEditorText = this.getEditorText.bind(this);
+    this.resetMessages = this.resetMessages.bind(this);
   }
 
   deleteQuestion(id) {
@@ -102,23 +103,15 @@ export default class QuestionList extends Component {
     this.openModal('edit');
   }
 
-
   closeModal() {
     this.setState({modalIsOpen: false});
     this.setState({editModalIsOpen: false});
-    this.setState({message: false});
-    this.setState({error: false});
+    this.resetMessages()
   }
 
-  createQuestion() {
-    axios.post('/api/questions', {
-      question_content: this.state.questionContent,
-      answer: this.state.answerInput 
-      })
-      .then(response => {
-        this.getQuestions()
-      }).catch(error => {
-      });
+  resetMessages(){
+    this.setState({message: false});
+    this.setState({error: false});
   }
 
   getEditorText(value){
@@ -169,7 +162,6 @@ export default class QuestionList extends Component {
         >
         </EditModal>
         <DeleteModal
-          key="modal"
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles}

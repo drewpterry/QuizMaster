@@ -1,9 +1,10 @@
 import React from 'react';
-import {render, shallow} from 'enzyme';
+import { mount, shallow} from 'enzyme';
 import sinon from 'sinon';
 import DeleteModal from './DeleteModal';
 
 describe('<DeleteModal />', () => {
+
   it('should render one <Modal/> component', () => {
     const wrapper = shallow(<DeleteModal />) 
     expect(wrapper.find('Modal')).to.have.length(1);
@@ -18,4 +19,6 @@ describe('<DeleteModal />', () => {
     const wrapper = shallow(<DeleteModal />) 
     expect(wrapper.instance().modalContent(false).props.children).to.have.length(4);
   });
+
+
 });

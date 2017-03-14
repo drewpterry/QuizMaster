@@ -13,6 +13,7 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
+
 export default class DeleteModal extends Component {
 
   modalContent(message) {

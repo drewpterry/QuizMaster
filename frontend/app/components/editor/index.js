@@ -10,19 +10,18 @@ export default class MyStatefulEditor extends Component {
     }
   }
 
-  componentDidMount(){
-    this.setInitialValue(this.props.value)
-  }
-
   static propTypes = {
     onChange: PropTypes.func
   };
+
+  componentDidMount(){
+    this.setInitialValue(this.props.value)
+  }
 
   setInitialValue(string) {
     if (string) {
       var initialValue = RichTextEditor.createValueFromString(string, 'html')
     } else {
-      console.log('ma')
       var initialValue = RichTextEditor.createEmptyValue()
     }
     this.setState({value: initialValue})
@@ -38,7 +37,7 @@ export default class MyStatefulEditor extends Component {
   render () {
     const toolbarConfig = {
       // Specify the groups to display
-      display: ['INLINE_STYLE_BUTTONS', 'LINK_BUTTONS'],
+      display: ['INLINE_STYLE_BUTTONS'],
       INLINE_STYLE_BUTTONS: [
         {label: 'Bold', style: 'BOLD'},
         {label: 'Italic', style: 'ITALIC'},
