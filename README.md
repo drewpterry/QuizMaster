@@ -1,5 +1,7 @@
-#QuizMaster 
+# QuizMaster 
+
 ## Explanation 
+
 This is a small app using Ruby on Rails as an API and a frontend written with React.js
 
 ## Prereqs 
@@ -11,10 +13,15 @@ This project has two parts, the Ruby on Rails API and the React.js frontend so e
 ### API setup
 
 `git clone https://github.com/drewpterry/QuizMaster.git`
+
 `cd QuizMaster`
+
 `cd api`
+
 `bundle install`
+
 `rails db:migrate RAILS_ENV=development`
+
 `rails s`
 
 Visit localhost:3000 on your browser and you should see a "Yay! You're on Rails!" page
@@ -26,7 +33,9 @@ Please keep this running while you set up the frontend.
 From the QuizMaster directory:
 
 `cd frontend`
+
 `npm install`
+
 `npm run dev`
 
 Visit localhost:8020 on your browser and you should see the QuizMaster homepage 
