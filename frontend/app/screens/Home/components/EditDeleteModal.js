@@ -13,7 +13,7 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
-export default class EditDeleteModal extends Component {
+export default class EditorModal extends Component {
 
   render() {
     return (
@@ -49,7 +49,7 @@ export default class EditDeleteModal extends Component {
           <span>{this.props.error}</span>
 
           <button onClick={this.props.actionClick} type="button" className="btn btn-success pull-right">{this.props.actionButtonName}</button>
-          <button onClick={this.props.closeModal} type="button" className="btn btn-default pull-right">Cancel</button>
+          <button onClick={this.props.closeModal} type="button" className="btn btn-default pull-right">{this.props.closeButtonName}</button>
         </Modal>
       </div>
 

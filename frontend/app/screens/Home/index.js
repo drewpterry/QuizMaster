@@ -6,6 +6,18 @@ import CreateModal from 'screens/Home/components/EditDeleteModal';
 import QuestionList from 'screens/Home/components/QuestionList';
 import axios from 'axios';
 
+const customStyles = {
+  content : {
+    top                   : '40%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    width                 : '60%',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
 export default class Home extends Component {
   constructor() {
     super();
@@ -33,6 +45,10 @@ export default class Home extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+    this.setState({messageModalIsOpen: false});
+    this.setState({error: false});
+    this.setState({questionContent: ""});
+    this.setState({answerInput: ""});
   }
 
   getQuestions() {
@@ -54,6 +70,8 @@ export default class Home extends Component {
       })
       .then(response => {
         this.getQuestions()
+        this.setState({modalIsOpen: false});
+        this.setState({messageModalIsOpen: true});
       }).catch(error => {
         var errorMessage = error.response.data.message;
         this.setState({error: errorMessage});
@@ -94,12 +112,24 @@ export default class Home extends Component {
             closeModal={this.closeModal}
             title={"Create New Question"}
             actionButtonName={"Create"}
+            closeButtonName={"Cancel"}
             editorChange={this.getEditorText}
             inputChange={this.inputChange}
             actionClick={this.createQuestion}
             error={this.state.error}
           >
           </CreateModal>
+          <Modal
+            isOpen={this.state.messageModalIsOpen}
+            closeModal={this.closeModal}
+            contentLabel={"Message"}
+            style={customStyles}
+          >
+          <button onClick={this.closeModal} type="button" className="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            Question created!
+          </Modal>
         </div>
       </div>
     );

@@ -4,11 +4,14 @@ RSpec.describe 'Question API', type: :request do
   # initialize test data 
   let!(:question) { create_list(:question, 10) }
   let(:question_id) { question.first.id }
+  before(:all) do
+    base_url = 'api' 
+  end
 
   # Test suite for GET /questions
-  describe 'GET /questions' do
+  describe 'GET api/questions' do
     # make HTTP get request before each example
-    before { get '/questions' }
+    before { get 'api/questions' }
 
     it 'returns questions' do
       # Note `json` is a custom helper to parse JSON responses
@@ -23,7 +26,7 @@ RSpec.describe 'Question API', type: :request do
 
   # Test suite for GET /questions/:id
   describe 'GET /questions/:id' do
-    before { get "/questions/#{question_id}" }
+    before { get "api/questions/#{question_id}" }
 
     context 'when the record exists' do
       it 'returns the question' do

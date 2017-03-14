@@ -31,7 +31,6 @@ export default class Home extends Component {
     };
 
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.createQuestion = this.createQuestion.bind(this);
     this.getEditorText = this.getEditorText.bind(this);
@@ -43,11 +42,6 @@ export default class Home extends Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
   }
 
   closeModal() {

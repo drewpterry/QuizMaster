@@ -48,7 +48,7 @@ export default class QuestionList extends Component {
       });
   }
 
-  getQuestion(id, successCallback, failCallback) {
+  getQuestion(id, successCallback) {
     axios.get('/api/questions/' + id)
       .then(response => {
         successCallback(response.data)
@@ -64,6 +64,8 @@ export default class QuestionList extends Component {
       .then(response => {
         this.props.onChangeCallback()
       }).catch(error => {
+        var errorMessage = error.response.data.message;
+        this.setState({error: errorMessage});
       });
   }
 
@@ -159,9 +161,11 @@ export default class QuestionList extends Component {
           editorValue={this.state.questionValue}
           answerValue={this.state.answerInput}
           actionButtonName={"Submit"}
+          closeButtonName={"Close"}
           editorChange={this.getEditorText}
           inputChange={this.inputChange}
           actionClick={this.updateQuestion}
+          error={this.updateQuestion}
         >
         </EditModal>
         <DeleteModal
@@ -176,6 +180,17 @@ export default class QuestionList extends Component {
           error={this.state.error}
         >
         </DeleteModal>
+        <Modal
+          isOpen={this.state.messageModalIsOpen}
+          closeModal={this.closeModal}
+          contentLabel={"Message"}
+          style={customStyles}
+        >
+        <button onClick={this.closeModal} type="button" className="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          Question created!
+        </Modal>
 
         <table className="table">
           <thead>
