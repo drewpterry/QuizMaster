@@ -5,7 +5,6 @@ import RichTextEditor from 'react-rte';
 import App from './app/app.js';
 import Home from './app/screens/Home';
 import Quiz from './app/screens/Quiz';
-import questionBase from './app/screens/Question/Add';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles.css';
 

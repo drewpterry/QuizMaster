@@ -94,7 +94,7 @@ export default class Home extends Component {
         <div className="jumbotron">
           <div className="container">
             <h1>Quiz Master</h1>
-            <p>...</p>
+            <p>Make a quiz, then take the quiz.</p>
             <p><Link to="quiz"><button type="button" className="btn btn-primary btn-lg">Take the Quiz!</button></Link></p>
           </div>
         </div>
