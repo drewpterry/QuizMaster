@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
 
   # PUT /questions/:id
   def update
-    @question.update(question_params)
+    @question.update!(question_params)
     head :no_content
   end
 

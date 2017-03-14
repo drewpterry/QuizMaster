@@ -85,6 +85,7 @@ RSpec.describe 'Question API', type: :request do
   # Test suite for PUT /questions/:id
   describe 'PUT /questions/:id' do
     let(:valid_attributes) { { question_content: 'Shopping' } }
+    let(:invalid_attributes) { { question_content: 'testme', answer: nil} }
 
     context 'when the record exists' do
       before { put @base_url + "/questions/#{question_id}", params: valid_attributes }
@@ -95,6 +96,19 @@ RSpec.describe 'Question API', type: :request do
 
       it 'returns status code 204' do
         expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when the PUT request is invalid' do
+      before { put @base_url + "/questions/#{question_id}", params: invalid_attributes }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(json['message'])
+          .to match("Validation failed: Answer can't be blank")
       end
     end
   end
