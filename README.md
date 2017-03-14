@@ -14,9 +14,7 @@ This project has two parts, the Ruby on Rails API and the React.js frontend so e
 
 `git clone https://github.com/drewpterry/QuizMaster.git`
 
-`cd QuizMaster`
-
-`cd api`
+`cd QuizMaster/api`
 
 `bundle install`
 
