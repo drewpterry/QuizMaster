@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import axios from 'axios';
 import QuestionList from './QuestionList';
+import sinon from 'sinon';
 
 describe('QuestionList', () => {
 
@@ -58,6 +60,7 @@ describe('QuestionList', () => {
     wrapper.instance().setQuestionId(3);
     expect(wrapper.state().questionId).to.equal(3);
   });
+
 });
 
 function renderComponent(

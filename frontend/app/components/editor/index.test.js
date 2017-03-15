@@ -29,4 +29,11 @@ describe('<Editor />', () => {
     const wrapper = mount(<Editor />);
     expect(Editor.prototype.componentDidMount.calledOnce).to.equal(true);
   });
+
+  it('onChange change sets value', () => {
+    const wrapper = mount(<Editor />);
+    wrapper.instance().onChange('value');
+    expect(wrapper.state().value('value')).to.equal('value');
+  });
+
 });

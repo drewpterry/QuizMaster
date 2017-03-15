@@ -38,16 +38,16 @@ export default class QuestionList extends Component {
     this.resetMessages = this.resetMessages.bind(this);
   }
 
-  deleteQuestion(id) {
-    axios.delete('/api/questions/' + id)
-      .then(response => {
-        this.props.onChangeCallback()
-        this.setState({message: "Deletion Sucessful!"});
-      }).catch(error => {
-        var errorMessage = 'Question not deleted: ' + error.response.data.message;
-        this.setState({error: errorMessage});
-      });
-  }
+    deleteQuestion(id) {
+      return axios.delete('/api/questions/' + id)
+        .then(response => {
+          this.props.onChangeCallback()
+          this.setState({message: "Deletion Sucessful!"});
+        }).catch(error => {
+          var errorMessage = 'Question not deleted: ' + error.response.data.message;
+          this.setState({error: errorMessage});
+        });
+    }
 
   getQuestion(id, successCallback) {
     axios.get('/api/questions/' + id)
@@ -64,9 +64,12 @@ export default class QuestionList extends Component {
       })
       .then(response => {
         this.props.onChangeCallback()
+        this.setState({message: "Question saved!"});
       }).catch(error => {
         var errorMessage = error.response.data.message;
-        this.setState({error: errorMessage});
+        console.log(errorMessage)
+        this.setState({message: errorMessage});
+        console.log(this.state.error)
       });
   }
 
@@ -158,7 +161,7 @@ export default class QuestionList extends Component {
           editorChange={this.getEditorText}
           inputChange={this.inputChange}
           actionClick={this.updateQuestion}
-          error={this.updateQuestion}
+          message={this.state.message}
         >
         </EditModal>
         <DeleteModal

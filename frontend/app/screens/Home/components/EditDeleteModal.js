@@ -46,7 +46,7 @@ export default class EditorModal extends Component {
               <input onChange={this.props.inputChange} type="text" className="form-control" id="input-answer" placeholder="Answer" value={this.props.answerValue}/>
             </div>
           </div>
-          <span>{this.props.error}</span>
+          <span>{this.props.message}</span>
 
           <button onClick={this.props.actionClick} type="button" className="btn btn-success pull-right">{this.props.actionButtonName}</button>
           <button onClick={this.props.closeModal} type="button" className="btn btn-default pull-right">{this.props.closeButtonName}</button>

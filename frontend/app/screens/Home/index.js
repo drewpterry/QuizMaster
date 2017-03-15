@@ -116,7 +116,7 @@ export default class Home extends Component {
             editorChange={this.getEditorText}
             inputChange={this.inputChange}
             actionClick={this.createQuestion}
-            error={this.state.error}
+            message={this.state.error}
           >
           </CreateModal>
           <Modal

@@ -3,6 +3,6 @@
   height:400px;
 }
 
-#mee.form-group {
-  margin-bottom:10px;
+.input-group-hide {
+  display: none;
 }

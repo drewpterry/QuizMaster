@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router';
 import axios from 'axios';
 import wordsToNumbers from 'words-to-numbers';
 import ScoreTracker from 'screens/Quiz/components/ScoreTracker';
@@ -13,11 +14,12 @@ export default class Quiz extends Component {
       questions: false,
       correctCount: 0,
       incorrectCount: 0,
-      remaining: false,
+      remaining: 0,
       questionIndex: 0,
       showAnswer: false,
       answerInput: '' 
     };
+    this.baseState = this.state;
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -29,6 +31,7 @@ export default class Quiz extends Component {
     this.score = this.score.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.makePercent = this.makePercent.bind(this);
+    this.resetQuiz = this.resetQuiz.bind(this);
     this.getQuestions();
   }
 
@@ -64,11 +67,11 @@ export default class Quiz extends Component {
   }
 
   nextQuestion() {
-    this.setState({ questionIndex: this.state.questionIndex + 1})
+    this.setState({questionIndex: this.state.questionIndex + 1})
   }
 
-  incrementCount(countType) {
-    if (countType === 'correct') {
+  incrementCount(answerCorrect) {
+    if (answerCorrect) {
       this.setState({correctCount: this.state.correctCount + 1})
     } else {
       this.setState({incorrectCount: this.state.incorrectCount + 1})
@@ -77,15 +80,15 @@ export default class Quiz extends Component {
 
   submitAnswer() {
     this.setState({showAnswer: true});
-    if(this.answerCorrect(this.state.answerInput)){
-      this.incrementCount('correct');
-    } else {
-      this.incrementCount('incorrect');
-    }
-    this.setState({ remaining: this.state.remaining - 1})
+    var answerCorrect = this.answerCorrect(this.state.answerInput);
+    this.incrementCount(answerCorrect);
+    this.setState({remaining: this.state.remaining - 1})
 
     var self = this;
     setTimeout(function(){
+      if (self.state.remaining === 0) {
+        self.openModal()
+      }
       self.nextQuestion();
       self.setState({showAnswer: false});
       self.textInput.value = '';
@@ -94,27 +97,35 @@ export default class Quiz extends Component {
 
   answerCorrect(user_answer) {
     var user_answer = user_answer.toLowerCase();
-    var answer = this.currentQuestion('answer').toLowerCase()
-    return (user_answer === answer || wordsToNumbers(user_answer) === parseInt(answer))
+    var answer = this.currentQuestion('answer').toLowerCase();
+    return (user_answer === answer || wordsToNumbers(user_answer) === parseInt(answer));
   }
 
   score() {
-    var score = this.makePercent(this.state.correctCount, this.state.questionIndex) 
-    return score
+    var totalAnswered = this.state.correctCount + this.state.incorrectCount;
+    var score = this.makePercent(this.state.correctCount, totalAnswered);
+    return score;
   }
 
   makePercent(numerator, denominator) {
-    if (denominator === 0) {return '0%'}
-    var percent = (numerator / denominator) * 100
-    var percent = percent.toFixed(1) + '%'
-    return percent 
+    if (denominator === 0) {return '0%'};
+    var percent = (numerator / denominator) * 100;
+    var percent = percent.toFixed(1) + '%';
+    return percent ;
   }
 
   inputChange(e) {
     this.setState({ answerInput: e.target.value });
   }
 
+  resetQuiz() {
+    this.setState(this.baseState);
+    this.getQuestions();
+  }
+
   render() {
+    var inputClass = this.state.modalIsOpen ? "input-group-hide" : "input-group";
+    var inputButtonClass = this.state.modalIsOpen ? "input-group-hide" : "input-group-btn";
     return (
       <div>
         <div className="row">
@@ -133,20 +144,24 @@ export default class Quiz extends Component {
             <h3> {this.renderAnswer()} </h3>
           </div>
           <div className="col-md-8 col-md-offset-2 text-center">
-            <div className="input-group">
+            <div className={inputClass}>
               <input onChange={this.inputChange} ref={(input) => { this.textInput = input; }} type="text" className="form-control" placeholder="Answer"/>
-              <span className="input-group-btn">
+              <span className={inputButtonClass}>
                 <button onClick={this.submitAnswer} className="btn btn-default" type="button">Go!</button>
               </span>
             </div>
           </div>
         </div>
+
         <Modal
           isOpen={this.state.modalIsOpen}
-          onRequestClose={this.score}
-          contentLabel="Create Modal"
+          contentLabel="Report Modal"
+          shouldCloseOnOverlayClick={false}
         >
-        Complete
+          Complete
+          {this.score()}
+          <Link to="home"><button type="button" className="btn btn-success pull-right">Home</button></Link>
+          <button onClick={this.resetQuiz} type="button" className="btn btn-default pull-right">Retry</button>
         </Modal>
       </div>
     );
