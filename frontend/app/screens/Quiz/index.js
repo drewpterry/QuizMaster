@@ -80,7 +80,7 @@ export default class Quiz extends Component {
 
   submitAnswer() {
     this.setState({showAnswer: true});
-    var answerCorrect = this.answerCorrect(this.state.answerInput);
+    var answerCorrect = this.answerCorrect(this.state.answerInput, this.currentQuestion('answer'));
     this.incrementCount(answerCorrect);
     this.setState({remaining: this.state.remaining - 1})
 
@@ -95,10 +95,10 @@ export default class Quiz extends Component {
     }, 2000);
   }
 
-  answerCorrect(user_answer) {
-    var user_answer = user_answer.toLowerCase();
-    var answer = this.currentQuestion('answer').toLowerCase();
-    return (user_answer === answer || wordsToNumbers(user_answer) === parseInt(answer));
+  answerCorrect(userAnswer, correctAnswer) {
+    var userAnswer = userAnswer.toLowerCase();
+    var answer = correctAnswer.toLowerCase();
+    return (userAnswer === answer || wordsToNumbers(userAnswer) === parseInt(answer));
   }
 
   score() {
