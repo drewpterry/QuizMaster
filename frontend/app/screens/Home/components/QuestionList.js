@@ -54,6 +54,7 @@ export default class QuestionList extends Component {
       .then(response => {
         successCallback(response.data)
       }).catch(error => {
+          this.setState({error: error.resonse.data.message});
       });
   }
 
@@ -67,20 +68,16 @@ export default class QuestionList extends Component {
         this.setState({message: "Question saved!"});
       }).catch(error => {
         var errorMessage = error.response.data.message;
-        console.log(errorMessage)
         this.setState({message: errorMessage});
         console.log(this.state.error)
       });
   }
 
   openModal(modalType) {
-    switch(modalType) {
-      case 'delete':
-        this.setState({modalIsOpen: true});
-        break;
-      case 'edit':
-        this.setState({editModalIsOpen: true});
-        break;
+    if (modalType ==='delete') {
+      this.setState({modalIsOpen: true});
+    } else {
+      this.setState({editModalIsOpen: true});
     }
   }
 
@@ -90,13 +87,10 @@ export default class QuestionList extends Component {
 
   onEditOrDeleteClick(id, modalType){
     this.setQuestionId(id);
-    switch(modalType) {
-      case 'delete':
-        this.openModal(modalType);
-        break;
-      case 'edit':
-        this.getQuestion(id, this.setEditState)
-        break;
+    if (modalType ==='delete') {
+      this.openModal(modalType);
+    } else {
+      this.getQuestion(id, this.setEditState)
     }
   }
 

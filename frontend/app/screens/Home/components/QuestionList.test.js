@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import axios from 'axios';
+import moxios from 'moxios';
 import QuestionList from './QuestionList';
 import sinon from 'sinon';
 

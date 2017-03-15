@@ -1,9 +1,11 @@
 import React from 'react';
-import {render, shallow} from 'enzyme';
+import {render, mount, shallow} from 'enzyme';
 import sinon from 'sinon';
+import moxios from 'moxios';
 import Quiz from './index.js';
 
 describe('<Quiz />', () => {
+
   it('should have a ScoreTracker and Modal', () => {
     const wrapper = shallow(<Quiz/>) 
     expect(wrapper.find('Modal')).to.have.length(1);
