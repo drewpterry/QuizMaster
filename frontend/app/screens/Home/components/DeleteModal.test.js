@@ -19,6 +19,4 @@ describe('<DeleteModal />', () => {
     const wrapper = shallow(<DeleteModal />) 
     expect(wrapper.instance().modalContent(false).props.children).to.have.length(4);
   });
-
-
 });

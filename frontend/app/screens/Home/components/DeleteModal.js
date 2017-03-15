@@ -17,7 +17,7 @@ const customStyles = {
 export default class DeleteModal extends Component {
 
   modalContent(message) {
-    if(message){
+    if (message) {
       var content = message 
     } else {
       var content = 

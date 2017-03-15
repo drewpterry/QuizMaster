@@ -145,7 +145,7 @@ export default class Quiz extends Component {
           </div>
           <div className="col-md-8 col-md-offset-2 text-center">
             <div className={inputClass}>
-              <input onChange={this.inputChange} ref={(input) => { this.textInput = input; }} type="text" className="form-control" placeholder="Answer"/>
+              <input onChange={this.inputChange} ref={(input) => {this.textInput = input;}} type="text" className="form-control" placeholder="Answer"/>
               <span className={inputButtonClass}>
                 <button onClick={this.submitAnswer} className="btn btn-default" type="button">Go!</button>
               </span>

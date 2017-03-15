@@ -14,7 +14,7 @@ export default class MyStatefulEditor extends Component {
     onChange: PropTypes.func
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.setInitialValue(this.props.value)
   }
 

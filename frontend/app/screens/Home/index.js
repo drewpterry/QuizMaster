@@ -55,11 +55,11 @@ export default class Home extends Component {
     axios.get('/api/questions')
       .then(response => {
         const questions = response.data 
-        this.setState({ questions });
-        this.setState({ showList: true});
+        this.setState({questions});
+        this.setState({showList: true});
       }).catch(error => {
-        this.setState({ questions: false });
-        this.setState({ error: "oops something went wrong!"});
+        this.setState({questions: false});
+        this.setState({error: "oops something went wrong!"});
       });
   }
 
@@ -78,13 +78,13 @@ export default class Home extends Component {
       });
   }
 
-  getEditorText(value){
+  getEditorText(value) {
     const questionContent = value.toString('html')
-    this.setState({ questionContent })
+    this.setState({questionContent})
   }
 
   inputChange(e) {
-    this.setState({ answerInput: e.target.value });
+    this.setState({answerInput: e.target.value});
   }
 
   render() {

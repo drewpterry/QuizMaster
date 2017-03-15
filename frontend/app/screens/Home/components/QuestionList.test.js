@@ -24,7 +24,7 @@ describe('QuestionList', () => {
 
   it('should render the `error message` in <table>', () => {
     const message = "Uh oh, we didn't get any data...";
-    const wrapper = renderComponent({false});
+    const wrapper = mount(<QuestionList />);
     expect(wrapper.find('tbody')).to.contain.text(message);
   });
 

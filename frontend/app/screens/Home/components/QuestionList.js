@@ -94,7 +94,7 @@ export default class QuestionList extends Component {
     }
   }
 
-  setEditState(question){
+  setEditState(question) {
     this.setState({questionValue: question.question_content});
     this.setState({answerInput: question.answer});
     this.openModal('edit');
@@ -106,22 +106,22 @@ export default class QuestionList extends Component {
     this.resetMessages()
   }
 
-  resetMessages(){
+  resetMessages() {
     this.setState({message: false});
     this.setState({error: false});
   }
 
-  getEditorText(value){
+  getEditorText(value) {
     const questionContent = value.toString('html')
-    this.setState({ questionContent })
+    this.setState({questionContent})
   }
 
   inputChange(e) {
-    this.setState({ answerInput: e.target.value });
+    this.setState({answerInput: e.target.value});
   }
 
   renderQuestionList() {
-    if(this.props.questions){
+    if( this.props.questions > 0){
       var questionList = this.props.questions.map(function(question, index) {
         return <tr key={index}>
                 <th scope="row">{index + 1}</th>
@@ -135,8 +135,10 @@ export default class QuestionList extends Component {
               </tr>;
       }, this)
       return questionList;
+    } else if (this.props.questions) {
+      return  "You have no questions! Add one to get started!";
     } else {
-      return  "Uh oh, we didn't get any data...";
+      return  "Uh oh, there was a problem getting the data...";
     }
   }
 
