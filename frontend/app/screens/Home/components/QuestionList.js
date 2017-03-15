@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import EditModal from 'screens/Home/components/EditDeleteModal';
+import EditModal from 'screens/Home/components/EditorModal';
 import DeleteModal from 'screens/Home/components/DeleteModal';
 
 const customStyles = {

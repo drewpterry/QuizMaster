@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Modal from 'react-modal';
 import TextEditor from 'components/editor';
-import CreateModal from 'screens/Home/components/EditDeleteModal';
+import CreateModal from 'screens/Home/components/EditorModal';
 import QuestionList from 'screens/Home/components/QuestionList';
 import axios from 'axios';
 
