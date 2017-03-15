@@ -129,8 +129,8 @@ export default class QuestionList extends Component {
                 <td dangerouslySetInnerHTML={{ __html:question.question_content}}></td>
                 <td>{question.answer}</td>
                 <td>
-                  <button onClick={ () => {this.onEditOrDeleteClick(question.id, 'edit')}} type="button" className="btn btn-default">Edit</button>
-                  <button onClick={ () => {this.onEditOrDeleteClick(question.id, 'delete')}} type="button" className="btn btn-danger">Delete</button>
+                  <button onClick={() => {this.onEditOrDeleteClick(question.id, 'edit')}} type="button" className="btn btn-default">Edit</button>
+                  <button onClick={() => {this.onEditOrDeleteClick(question.id, 'delete')}} type="button" className="btn btn-danger">Delete</button>
                 </td>
               </tr>;
       }, this)

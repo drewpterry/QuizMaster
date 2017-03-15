@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow} from 'enzyme';
 import sinon from 'sinon';
 import Editor from './index.js';
+import RichTextEditor from 'react-rte';
 
 describe('<Editor />', () => {
   it('should have a RichTextEditor component', () => {
@@ -31,9 +32,15 @@ describe('<Editor />', () => {
   });
 
   it('onChange change sets value', () => {
-    const wrapper = mount(<Editor />);
+    const wrapper = shallow(<Editor />);
     wrapper.instance().onChange('value');
-    expect(wrapper.state().value('value')).to.equal('value');
+    expect(wrapper.state().value).to.equal('value');
   });
 
+  it('onChange calls onChange prop once', () => {
+    const spy = sinon.spy()
+    const wrapper = shallow(<Editor onChange={spy} />);
+    wrapper.instance().onChange('value');
+    expect(spy.calledOnce).to.be.true;
+  });
 });
