@@ -4,7 +4,9 @@
 
 This is a small app using Ruby on Rails as an API and a frontend written with React.js
 
-## Prereqs 
+## Ruby / Rails Version 
+Ruby 2.3.1
+Rails 5.0.0
 
 ## Setup 
 
@@ -52,3 +54,8 @@ You're done! You've now got the frontend successfully using the Rails API!
 ### Mocha and React 
 
 `npm run test`
+
+## Other comments / considerations
+
+This was the first time I've ever used React, it was very fun but also very challenging!
+

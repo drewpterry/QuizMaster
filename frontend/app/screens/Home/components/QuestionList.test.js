@@ -71,4 +71,6 @@ describe('QuestionList', () => {
     wrapper.instance().setQuestionId(3);
     expect(wrapper.state().questionId).to.equal(3);
   });
+
+  //TODO research more into mocking API for tests so that you can test the api requests (https://github.com/mzabriskie/moxios)
 });
