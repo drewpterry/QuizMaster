@@ -120,6 +120,7 @@ export default class QuestionList extends Component {
     this.setState({answerInput: e.target.value});
   }
 
+  // TODO this whole method can be better, look at again later 
   renderQuestionList() {
     if (!this.props.questions) {
       return  "Uh oh, there was a problem getting the data...";
@@ -138,11 +139,9 @@ export default class QuestionList extends Component {
               </tr>;
       }, this)
       return questionList;
-    } else if (this.props.questions) {
-      return  "You have no questions! Add one to get started!";
     } else {
-      return  "Uh oh, there was a problem getting the data...";
-    }
+      return  "You have no questions! Add one to get started!";
+    } 
   }
 
   render() {
