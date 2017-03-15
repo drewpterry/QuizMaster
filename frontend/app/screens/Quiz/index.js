@@ -5,6 +5,17 @@ import wordsToNumbers from 'words-to-numbers';
 import ScoreTracker from 'screens/Quiz/components/ScoreTracker';
 import Modal from 'react-modal';
 
+const customStyles = {
+  content : {
+    top                   : '40%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    width                 : '40%',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 export default class Quiz extends Component {
   constructor() {
     super();
@@ -156,12 +167,23 @@ export default class Quiz extends Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           contentLabel="Report Modal"
+          style={customStyles}
           shouldCloseOnOverlayClick={false}
         >
-          Complete
-          {this.score()}
-          <Link to="home"><button type="button" className="btn btn-success pull-right">Home</button></Link>
-          <button onClick={this.resetQuiz} type="button" className="btn btn-default pull-right">Retry</button>
+          <div className="row">
+            <div className="col-md-6 col-md-offset-3 text-center">
+              <h3>Your final score: </h3>
+            </div>
+            <div className="col-md-6 col-md-offset-3 text-center">
+              <h3>{this.score()}</h3>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <Link to="home"><button type="button" className="btn btn-success pull-right">Home</button></Link>
+              <button onClick={this.resetQuiz} type="button" className="btn btn-default pull-right">Retry</button>
+            </div>
+          </div>
         </Modal>
       </div>
     );
