@@ -11,8 +11,8 @@ describe('QuestionList', () => {
                    "answer":"6",
           }]}
 
-  it('should modals and <table>', () => {
-    const wrapper = shallow(<QuestionList/>);
+  it('should have modals and <table>', () => {
+    const wrapper = shallow(<QuestionList {...questionProp}/>);
     expect(wrapper.find('DeleteModal')).to.have.length(1);
     expect(wrapper.find('table')).to.have.length(1);
   });
@@ -23,8 +23,14 @@ describe('QuestionList', () => {
   });
 
   it('should render the `error message` in <table>', () => {
-    const message = "Uh oh, we didn't get any data...";
+    const message = "Uh oh, there was a problem getting the data...";
     const wrapper = mount(<QuestionList />);
+    expect(wrapper.find('tbody')).to.contain.text(message);
+  });
+
+  it('should render create question message', () => {
+    const message = "You have no questions! Add one to get started!";
+    const wrapper = mount(<QuestionList questions={[]} />);
     expect(wrapper.find('tbody')).to.contain.text(message);
   });
 

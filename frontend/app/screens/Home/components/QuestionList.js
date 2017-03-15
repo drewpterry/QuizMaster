@@ -121,7 +121,10 @@ export default class QuestionList extends Component {
   }
 
   renderQuestionList() {
-    if( this.props.questions > 0){
+    if (!this.props.questions) {
+      return  "Uh oh, there was a problem getting the data...";
+
+    } else if (this.props.questions.length > 0){
       var questionList = this.props.questions.map(function(question, index) {
         return <tr key={index}>
                 <th scope="row">{index + 1}</th>
